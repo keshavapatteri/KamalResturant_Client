@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { UserSlide } from "../Components/User/UserSlide";
 import UserReviews from "../Components/User/UserReviews";
 import { UserCards } from "../Components/User/UserCards";
+import { Category } from "../Components/User/Categery";
+
 
 
 export const UserHomePage = () => {
@@ -14,40 +16,8 @@ export const UserHomePage = () => {
 <UserSlide/>
 {/* cattegery */}
 
-<div class="bg-white py-6 px-4">
-  <h2 class="text-xl font-semibold mb-4 text-gray-800">What's on your mind?</h2>
-  <div class="flex overflow-x-auto space-x-6 scrollbar-hide">
-    <div class="flex-shrink-0 text-center">
-      <img src="https://shop.parallellearning.in/cdn/shop/products/Pure-Veg.gif?v=1643700430" class="w-20 h-20 rounded-full mx-auto" alt="Pure Veg" />
-      <p class="mt-2 text-sm text-gray-700">Pure Veg</p>
-    </div>
-    <div class="flex-shrink-0 text-center">
-      <img src="https://i.ndtvimg.com/i/2018-03/paratha_620x350_81520838436.jpg" class="w-20 h-20 rounded-full mx-auto" alt="Paratha" />
-      <p class="mt-2 text-sm text-gray-700">Paratha</p>
-    </div>
-    <div class="flex-shrink-0 text-center">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrSodh2_bz3T_LLA16yP9WdpyAoAUkC5-TdA&s" class="w-20 h-20 rounded-full mx-auto" alt="Chinese" />
-      <p class="mt-2 text-sm text-gray-700">Chinese</p>
-    </div>
-    <div class="flex-shrink-0 text-center">
-      <img src="https://www.foodandwine.com/thmb/6wTm7a0y87X97LK-ZMxe2787kI8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/different-types-of-tea-FT-BLOG0621-7c7fd231e66d4fea8ca9a47cad52ba79.jpg" class="w-20 h-20 rounded-full mx-auto" alt="Tea" />
-      <p class="mt-2 text-sm text-gray-700">Tea</p>
-    </div>
-    <div class="flex-shrink-0 text-center">
-      <img src="https://thumbs.dreamstime.com/b/cup-cofee-top-heart-117247683.jpg" class="w-20 h-20 rounded-full mx-auto" alt="Coffee" />
-      <p class="mt-2 text-sm text-gray-700">Coffee</p>
-    </div>
-    <div class="flex-shrink-0 text-center">
-      <img src="https://res.cloudinary.com/hz3gmuqw6/image/upload/c_fill,q_auto,w_750/f_auto/North-Indian-food-phpUPkVj5" class="w-20 h-20 rounded-full mx-auto" alt="North Indian" />
-      <p class="mt-2 text-sm text-gray-700">North Indian</p>
-    </div>
-    <div class="flex-shrink-0 text-center">
-      <img src="https://media-assets.swiggy.com/swiggy/image/upload/f_auto,q_auto,fl_lossy/qltu1t1sdqzrvjmwygpl" class="w-20 h-20 rounded-full mx-auto" alt="Biryani" />
-      <p class="mt-2 text-sm text-gray-700">Biryani</p>
-    </div>
-  </div>
-</div>
 
+<Category/>
 {/* cards */}
 <UserCards/>
 

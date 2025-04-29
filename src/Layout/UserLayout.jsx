@@ -9,7 +9,6 @@ export const UserLayout = () => {
 <div>
 <UserHeader/>
     <div><Outlet/></div>
-
 <UserFooter/>
 
 </div>

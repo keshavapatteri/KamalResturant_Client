@@ -10,29 +10,30 @@ const Header = () => {
         <div className="flex justify-between items-center h-20">
           {/* Logo/Brand with custom logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link
-              to="/"
-              className="flex items-center space-x-2"
-              aria-label="SpiceKera Homepage"
-            >
-              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white text-blue-700 font-bold text-xl">
-                <span className="font-serif italic">KR</span>
-              </div>
-              <span className="text-white text-xl font-bold tracking-tight font-sans hover:text-blue-200 transition-colors hidden sm:block">
-              SpiceKera
-              </span>
-            </Link>
-          </div>
+  <Link
+    to="/"
+    className="flex items-center space-x-2"
+    aria-label="SpiceKera Homepage"
+  >
+    <img
+      src="https://img.pikbest.com/png-images/20241030/culinary-restaurant-logo-design_11027332.png!sw800" // Replace with your actual path
+      alt="SpiceKera Logo"
+      className="w-10 h-10 rounded-full object-cover"
+    />
+    <span className="text-white text-xl font-bold tracking-tight font-sans hover:text-blue-200 transition-colors hidden sm:block">
+      SpiceKera
+    </span>
+  </Link>
+</div>
+
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6 items-center">
-            <NavLink to="/" label="Home" />
+        
             <NavLink to="/Admin" label="Admin" />
             <NavLink to="/login" label="User Login" />
             <NavLink to="/ResturantLogin" label="Restaurant" />
-            <button className="ml-4 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-md hover:shadow-lg">
-              Reserve Table
-            </button>
+            
           </nav>
 
           {/* Mobile menu button */}

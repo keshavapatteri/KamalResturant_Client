@@ -44,6 +44,8 @@ import ProductListByCategory from '../Components/User/ProductListByCategory'
 import { UserAuth } from './Auth/UserAuth'
 import { AdminAuth } from './Auth/AdminAuth'
 import { RestAuth } from './Auth/RestAuth'
+import { PaymentFailed } from '../Pages/User/PaymentFailed'
+import { UserBeforeLayout } from '../Layout/UserBeforeLayout'
 
 
 
@@ -52,7 +54,7 @@ export const router=createBrowserRouter([
 
     {
         path: "/",
-        element:<RootLayout/>,
+        // element:<RootLayout/>,
         children:[
             {
                 path: "Admin",
@@ -148,9 +150,16 @@ export const router=createBrowserRouter([
             element: <PaymentSuccessPage/>
         },
         {
+            path: "PaymentFailed",
+            element: <PaymentFailed/>
+        },
+        {
             path: "Allorders",
             element: <AllOrders/>
         },
+        
+
+
         
     ]
 },
@@ -158,7 +167,7 @@ export const router=createBrowserRouter([
 
 {
     path: "/",
-    element:<UserLayout/>,
+    element:<UserBeforeLayout/>,
     children:[
         {
             path: "/home",

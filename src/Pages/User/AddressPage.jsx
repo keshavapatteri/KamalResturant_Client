@@ -43,8 +43,8 @@ export const AddressPage = () => {
   
     script.onload = () => {
       const options = {
-        key: 'rzp_test_huknLLPXfL1Laz', // Replace with your Razorpay public key
-
+        key: 'rzp_test_Yh0fPwTheqXsx5', // Replace with your Razorpay public key
+        
         
         amount: orderData.amount,
        
@@ -71,6 +71,7 @@ export const AddressPage = () => {
               // alert('Payment successful!');
               navigate('/PaymentSuccess');
             } else {
+              navigate('/PaymentFailed');
               alert('Payment verification failed!');
             }
           } catch (err) {
@@ -126,6 +127,7 @@ export const AddressPage = () => {
   };
 
   return (
+    <div className="p-4 md:p-8 max-w-7xl mx-auto ">
     <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 mt-20 mb-32">
       <div className="md:w-1/2 h-72 md:h-screen relative flex items-center justify-center overflow-hidden">
         <img
@@ -203,6 +205,7 @@ export const AddressPage = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };

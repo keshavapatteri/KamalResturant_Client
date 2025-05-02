@@ -8,19 +8,19 @@ import "swiper/css/effect-fade";
 
 const slides = [
   { 
-    image: "https://zarokharesto.com/images/demo/slides/slide-image-05.jpg", 
+    image: "https://restaurantindia.s3.ap-south-1.amazonaws.com/s3fs-public/2025-01/photo-1414235077428-338989a2e.JPG", 
     alt: "Delicious Food 1",
     title: "Authentic Local Cuisine",
     subtitle: "Taste the flavors of Chhindwara"
   },
   { 
-    image: "https://media.istockphoto.com/id/1418692720/photo/north-indian-famous-food-aloo-paratha-with-mango-pickle-and-butter.jpg", 
+    image: "https://restaurantindia.s3.ap-south-1.amazonaws.com/s3fs-public/content12975.jpg", 
     alt: "Delicious Food 2",
     title: "Freshly Made Daily",
     subtitle: "Prepared with love by local chefs"
   },
   { 
-    image: "https://t3.ftcdn.net/jpg/06/32/70/02/360_F_632700248_xyeAOc7I9kFHmcK0wto4fXV2VMmyxdgM.jpg", 
+    image: "https://parisjetaime.com/data/layout_image/11250_Les-Pinces-Plat--630x405--%C2%A9-Telly-Vision.jpg?ver=1687768724", 
     alt: "Delicious Food 3",
     title: "Seasonal Specialties",
     subtitle: "Discover our limited-time offerings"
@@ -71,9 +71,9 @@ export const UserSlide = () => {
                 <p className="text-lg md:text-xl text-white/90 mb-6 max-w-2xl mx-auto animate-fadeIn delay-100">
                   {slide.subtitle}
                 </p>
-                <button className="bg-white text-indigo-700 px-8 py-3 rounded-full font-semibold hover:bg-indigo-100 transition-all duration-300 shadow-lg animate-fadeIn delay-200">
+               <a href="/AllProducts"> <button className="bg-white text-indigo-700 px-8 py-3 rounded-full font-semibold hover:bg-indigo-100 transition-all duration-300 shadow-lg animate-fadeIn delay-200">
                   Order Now
-                </button>
+                </button></a>
               </div>
             </div>
           </SwiperSlide>

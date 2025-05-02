@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../../Config/AxiosInstance';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 export const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,12 +35,42 @@ export const CartPage = () => {
     }
   };
 
+  const updateCartItemQuantity = async (productId, newQuantity) => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.put('/Cart/update', {
+        productId,
+        quantity: newQuantity,
+
+      });
+      console.log('Cart updated:', response.data);
+      fetchCart(); // Refresh cart from parent
+    } catch (error) {
+      console.error('Failed to update cart:', error.response?.data || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const increaseQuantity = (productId, item) => {
+    const newQuantity = item.quantity + 1;
+    updateCartItemQuantity(productId, newQuantity);
+  };
+
+  const decreaseQuantity = (productId, item) => {
+    if (item.quantity > 1) {
+      const newQuantity = item.quantity - 1;
+      updateCartItemQuantity(productId, newQuantity);
+    }
+  };
+
   useEffect(() => {
     fetchCart();
+
   }, []);
 
   const calculateTotal = () => {
-    return cartItems.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
+    return cartItems?.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
   };
 
   // ... (keep all your existing functions like updateQuantityOnServer, deleteCartItem, etc.)
@@ -60,6 +90,35 @@ export const CartPage = () => {
     setShowCouponDropdown(false);
   };
 
+  const handleRemove = async (productId) => {
+    try {
+      const res = await axiosInstance.delete('/Cart/remove', {
+        data: { productId },
+        withCredentials: true,
+      });
+  
+      if (res.data?.cart?.Product?.length > 0) {
+        const updatedItems = res.data.cart.Product.map((item) => ({
+          ...item.ProductId,
+          quantity: item.quantity,
+          cartItemId: item._id,
+        }));
+  
+        setCartItems((prev) => prev.filter((r) => r._id !== productId));
+        toast.success("Item removed from cart successfully!");
+      } else {
+        setCartItems([]);
+        toast.success("Cart is now empty!");
+      }
+  
+    } catch (error) {
+      console.error('Error removing item:', error);
+      toast.error("Failed to remove item from cart.");
+      fetchCart(); // Optional rollback
+    }
+  };
+  
+
   // ... (keep your existing useEffect hooks)
 
   if (loading) {
@@ -70,14 +129,14 @@ export const CartPage = () => {
     );
   }
 
-  if (cartItems.length === 0) {
+  if (cartItems?.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
         <div className="text-6xl mb-4">🛒</div>
         <h2 className="text-2xl font-semibold text-gray-700 mb-2 text-center">Your cart is empty</h2>
         <p className="text-gray-500 mb-6 text-center">Looks like you haven't added anything to your cart yet</p>
-        <Link 
-          to="/menu" 
+        <Link
+          to="/menu"
           className="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition text-center w-full max-w-xs"
         >
           Browse Menu
@@ -93,10 +152,10 @@ export const CartPage = () => {
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 pb-36 pt-32">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-gray-800">Your Shopping Cart</h1>
-        
+
         {/* Cart Items - Responsive Grid */}
         <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6 sm:mb-8">
-          {cartItems.map((item, idx) => (
+          {cartItems?.map((item, idx) => (
             <div
               key={item._id || idx}
               className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-4 sm:p-6 border-b border-gray-100 last:border-none hover:bg-gray-50 transition"
@@ -109,7 +168,7 @@ export const CartPage = () => {
                   className="w-full h-full object-cover rounded-lg shadow-sm"
                 />
               </div>
-              
+
               {/* Product Details */}
               <div className="flex-1 w-full">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
@@ -126,29 +185,43 @@ export const CartPage = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4">
                   <div className="flex items-center border border-gray-200 rounded-full w-full sm:w-auto">
                     <button
-                      onClick={() => decreaseQuantity(item.cartItemId)}
+                      onClick={() => decreaseQuantity(item._id, item)}
+
+
                       className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-full w-10 text-center"
                     >
                       −
                     </button>
-                    <span className="px-3 text-md font-medium flex-1 text-center">{item.quantity}</span>
+                    <span className="px-3 text-md font-medium flex-1 text-center">
+                      {item.quantity}
+                    </span>
                     <button
-                      onClick={() => increaseQuantity(item.cartItemId)}
+                      onClick={() => increaseQuantity(item._id, item)}
+
                       className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-full w-10 text-center"
                     >
                       +
                     </button>
                   </div>
-                  
+
+
+
                   <button
-                    onClick={() => deleteCartItem(item._id)}
-                    className="text-red-500 hover:text-red-700 text-sm font-medium flex items-center justify-center sm:justify-start"
+                    onClick={() => handleRemove(item._id)}
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
                     Remove
                   </button>
+
+                  {/* <button
+        onClick={() => deleteCartItem(item._id)}
+        className="text-red-500 hover:text-red-700 text-sm font-medium flex items-center justify-center sm:justify-start"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+        </svg>
+        Remove
+      </button> */}
                 </div>
               </div>
             </div>
@@ -158,7 +231,7 @@ export const CartPage = () => {
         {/* Coupon Section - Responsive Layout */}
         <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-6 sm:mb-8">
           <h3 className="text-lg font-semibold text-gray-800 mb-3 sm:mb-4">Apply Coupon Code</h3>
-          
+
           <div className="relative">
             <div className="flex flex-col sm:flex-row">
               <div className="relative flex-1 mb-2 sm:mb-0 sm:mr-2">
@@ -220,22 +293,22 @@ export const CartPage = () => {
         {/* Order Summary - Responsive Layout */}
         <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-6 sm:mb-8">
           <h3 className="text-lg font-semibold text-gray-800 mb-3 sm:mb-4">Order Summary</h3>
-          
+
           <div className="space-y-2 sm:space-y-3">
             <div className="flex justify-between">
               <span className="text-gray-600">Subtotal</span>
-              <span className="font-medium">₹{totalAmount.toFixed(2)}</span>
+              <span className="font-medium">₹{totalAmount?.toFixed(2)}</span>
             </div>
-            
+
             {discount > 0 && (
               <div className="flex justify-between">
                 <span className="text-gray-600">Discount ({discount}%)</span>
                 <span className="text-green-600 font-medium">-₹{(totalAmount * discount / 100).toFixed(2)}</span>
               </div>
             )}
-            
+
             <div className="border-t border-gray-200 my-2 sm:my-3"></div>
-            
+
             <div className="flex justify-between text-lg font-semibold">
               <span>Total</span>
               <span className="text-green-600">₹{discountedTotal.toFixed(2)}</span>

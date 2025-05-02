@@ -53,7 +53,7 @@ export const PaymentSuccessPage = () => {
           Thank you for your booking. Your payment has been processed successfully.
         </p>
         <button
-          onClick={() => navigate('/cart')}
+          onClick={() => navigate('/home')}
           className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold shadow-md transition"
         >
           Go to Home

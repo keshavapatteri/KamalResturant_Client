@@ -31,11 +31,11 @@ export const UserHeader = () => {
 
   const navItems = [
     { path: "/home", label: "Home", icon: <Home size={18} /> },
-    { path: "#", label: "Menu", icon: <Utensils size={18} /> },
+    { path: "/AllProduct", label: "Menu", icon: <Utensils size={18} /> },
     { path: "/contact", label: "Contact", icon: <Phone size={18} /> },
     { path: "/Profile", label: "Profile", icon: <User size={18} /> },
     { path: "/Allorders", label: "Orders", icon: <ListOrdered size={18} /> },
-    { path: "/cart", label: "Cart", icon: <ShoppingCart size={18} /> },
+    { path: "/Cartpageeee", label: "Cart", icon: <ShoppingCart size={18} /> },
   ];
 
   return (
@@ -49,9 +49,9 @@ export const UserHeader = () => {
             onClick={() => navigate("/home")}
           >
             <img 
-              src="/Logo.jpg" 
+              src="https://img.pikbest.com/png-images/20241030/culinary-restaurant-logo-design_11027332.png!sw800" 
               alt="SpiceKera Logo" 
-              className="h-10 w-10 object-cover rounded-full border-2 border-red-500"
+              className="h-10 w-10 object-cover rounded-full"
             />
             <span className="text-xl font-bold bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent">
             SpiceKera

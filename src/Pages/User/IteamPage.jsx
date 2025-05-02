@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../Config/AxiosInstance';
+import { toast } from 'react-toastify'; // ✅ import toast
 
 export const IteamPage = () => {
   const { id } = useParams();
@@ -13,14 +14,12 @@ export const IteamPage = () => {
       try {
         const response = await axiosInstance.get(`/user/productByid/${id}`, {
           withCredentials: true,
-       
         });
-        console.log(response);
-        
+
         setProduct(response.data.data);
-        console.log('Fetched product:', response.data.data);
       } catch (error) {
         console.error('Error fetching product:', error);
+        toast.error('Failed to fetch product');
       } finally {
         setLoading(false);
       }
@@ -31,41 +30,33 @@ export const IteamPage = () => {
 
   const handleAddToCart = async () => {
     if (!product || !product.restaurantId?._id) {
-      alert('Product or restaurant information is missing');
+      toast.warning('Product or restaurant info is missing');
       return;
     }
-  const res=product._id
-  
-  
+
     const quantity = 1;
     const totalCost = product.price * quantity;
-  
-    console.log('Product ID being sent:', product._id); // Log the Product ID
-  
+
     try {
       const response = await axiosInstance.post(
         '/Cart/addToCart',
         {
-           
-            ProductId: res,  // Ensure you're sending the correct Product ID
-            quantity,
-            pricePerDay: product.price,
-            totalCost,
-            restaurantId: product.restaurantId._id,
-          },
-       
+          ProductId: product._id,
+          quantity,
+          pricePerDay: product.price,
+          totalCost,
+          restaurantId: product.restaurantId._id,
+        },
         { withCredentials: true }
       );
-      console.log('Added to cart:', response.data);
-      alert('Item added to cart!');
+      toast.success('Item added to cart!');
       navigate('/Cartpageeee');
     } catch (error) {
       console.error('Error adding to cart:', error.response?.data || error.message);
-      alert('Failed to add to cart');
+      toast.error('Failed to add item to cart');
     }
   };
-  
-  
+
   if (loading)
     return <div className="text-center text-lg py-10 animate-pulse">Loading Product...</div>;
 
@@ -118,7 +109,10 @@ export const IteamPage = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mt-6">
-            <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+            <button
+              className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition"
+              onClick={handleAddToCart}
+            >
               Order Now
             </button>
 
@@ -130,7 +124,7 @@ export const IteamPage = () => {
             </button>
 
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/AllProduct')}
               className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition"
             >
               Explore More

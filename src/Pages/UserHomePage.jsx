@@ -32,7 +32,7 @@ export const UserHomePage = () => {
         {/* Left: Text */}
         <div className="md:w-1/2 text-center md:text-left transition duration-300 group-hover:scale-105 group-hover:text-red-500">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            About Kamal Restaurant
+            About Spice Kera
           </h1>
           <p className="text-gray-600 text-lg">
             We serve authentic, freshly prepared meals that bring flavor and joy to every bite.

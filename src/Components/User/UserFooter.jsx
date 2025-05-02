@@ -15,17 +15,16 @@ export const UserFooter = () => {
 
   const quickLinks = [
     { path: "/about", label: "About Us" },
-    { path: "/menu", label: "Our Menu" },
-    { path: "/gallery", label: "Gallery" },
+    { path: "/AllProduct", label: "Our Menu" },
+    
     { path: "/contact", label: "Contact" },
-    { path: "/careers", label: "Careers" }
+  
   ];
 
   const legalLinks = [
     { path: "/privacy", label: "Privacy Policy" },
     { path: "/terms", label: "Terms & Conditions" },
-    { path: "/cookies", label: "Cookie Policy" },
-    { path: "/accessibility", label: "Accessibility" }
+  
   ];
 
   const features = [
@@ -57,9 +56,9 @@ export const UserFooter = () => {
           <div className="flex flex-col items-center lg:items-start">
             <div className="flex items-center mb-4">
               <img
-                src="/Logo.jpg"
-                alt="Kamal Restaurant Logo"
-                className="h-12 w-12 rounded-full border-2 border-red-500 mr-3"
+                 src="https://img.pikbest.com/png-images/20241030/culinary-restaurant-logo-design_11027332.png!sw800" 
+                 alt="SpiceKera Logo" 
+                 className="h-10 w-10 object-cover rounded-full"
               />
               <span className="text-2xl font-bold bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent">
               SpiceKera

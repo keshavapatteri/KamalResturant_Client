@@ -2,9 +2,9 @@ import React from 'react';
 
 export const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-6">
-      <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-3xl p-8 md:p-12">
-        <h1 className="text-3xl font-bold text-indigo-700 mb-4">About Us</h1>
+    <div className="min-h-screen bg-gray-50 py-12 px-6 ">
+      <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-3xl p-8 md:p-12 mt-10 ">
+        <h1 className="text-3xl font-bold text-indigo-700 mb-4 mt-25" >About Us</h1>
         <p className="text-gray-700 text-lg mb-6">
           Welcome to <span className="font-semibold text-indigo-600">Kamal Restaurant</span>, your go-to destination for discovering and ordering delicious meals from top restaurants around Chhindwara!
         </p>

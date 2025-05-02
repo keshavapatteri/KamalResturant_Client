@@ -3,7 +3,7 @@ import React from 'react';
 export const Contact = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-6">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8 md:p-12">
+      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8 md:p-12 mt-10">
         <h1 className="text-3xl font-bold text-indigo-700 mb-6">Contact Us</h1>
         <p className="text-gray-600 mb-8">
           Have any questions, feedback, or need support? Feel free to reach out using the form below.
@@ -52,7 +52,7 @@ export const Contact = () => {
         </form>
 
         <div className="mt-10 text-sm text-gray-500 text-center">
-          You can also reach us at: <span className="text-indigo-600">support@foodapp.com</span>
+          You can also reach us at: <span className="text-indigo-600">support@SpiceKera.com</span>
         </div>
       </div>
     </div>

@@ -8,4 +8,4 @@ export const axiosInstance= axios.create({
 
 
 )
-console.log(`${import.meta.env.VITEAPI}`);
+console.log(`api`,`${import.meta.env.VITEAPI}`);

@@ -22,7 +22,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL}/v1`, // Ensure there's a comma after this line
+    baseURL: `${import.meta.env.VITE_API_URL}v1`, // Ensure there's a comma after this line
     withCredentials: true,
 });
 

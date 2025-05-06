@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../../Config/AxiosInstance';
-import { FaCarSide, FaRupeeSign, FaCalendarAlt, FaReceipt, FaStar, FaUtensils } from 'react-icons/fa';
+import { FaCarSide, FaRupeeSign, FaCalendarAlt, FaReceipt, FaStar, FaUtensils, FaWindows } from 'react-icons/fa';
 import { GiMeal } from 'react-icons/gi';
 import { MdPayment, MdDeliveryDining } from 'react-icons/md';
 import { Navigate, useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 export const AllOrders = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState('');
@@ -19,7 +19,10 @@ const navigate =useNavigate ();
       try {
         const response = await axiosInstance.get('/payment/orders', {
           withCredentials: true,
+          
+          
         });
+        console.log(response)
         setOrders(response.data.payments);
       } catch (err) {
         if (err.response.data.success===false) {
@@ -47,10 +50,18 @@ const navigate =useNavigate ();
       setShowReviewForm(null);
     } catch (err) {
       console.error('Error submitting review:', err);
+      if(err.response.data.data===false){
+        toast.error(err.response.data.message)
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+    
+
+      }
       setError('❌ Failed to submit review');
     } finally {
-      setLoadingReview(false);
-      setTimeout(() => setSuccessMessage(''), 3000);
+      // setLoadingReview(false);
+      // setTimeout(() => setSuccessMessage(''), 3000);
     }
   };
 

@@ -3,22 +3,22 @@ import { axiosInstance } from '../../Config/AxiosInstance';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 export const AddressPage = () => {
-  const cartId = useParams();
+  const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const { cartTotal } = location.state || {};
-  const [cartItems, setCartItems] = useState([]);
-  
 
- 
+  const [cartItems, setCartItems] = useState([]);
   const [formData, setFormData] = useState({
     street: '',
     city: '',
     state: '',
     postalCode: '',
     phoneNumber: '',
-   
   });
+console.log(cartItems);
+
+  console.log('Cart Total:', cartTotal);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -31,25 +31,20 @@ export const AddressPage = () => {
     const savedCartItems = localStorage.getItem('cartItems');
     if (savedCartItems) {
       setCartItems(JSON.parse(savedCartItems));
-      
     }
   }, []);
-     
+
   const loadRazorpay = (orderData) => {
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
-  console.log(`orderData`,orderData);
-  
+
     script.onload = () => {
       const options = {
-        key: 'rzp_test_Yh0fPwTheqXsx5', // Replace with your Razorpay public key
-        
-        
-        amount: orderData.amount,
-       
+        key: 'rzp_test_Yh0fPwTheqXsx5',
+        amount: cartTotal,
         currency: 'INR',
-        name: 'Zomato ',
+        name: 'Zomato',
         description: 'Zomato Payment',
         order_id: orderData.id,
         handler: async (response) => {
@@ -58,17 +53,15 @@ export const AddressPage = () => {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
-              
             };
-  
+
             const verifyRes = await axiosInstance.post(
               '/payment/verifyRazorpay',
               verificationPayload,
               { withCredentials: true }
             );
-  
+
             if (verifyRes.data.success) {
-              // alert('Payment successful!');
               navigate('/PaymentSuccess');
             } else {
               navigate('/PaymentFailed');
@@ -83,43 +76,41 @@ export const AddressPage = () => {
           color: '#3399cc',
         },
       };
-  
+
       const rzp = new window.Razorpay(options);
       rzp.open();
     };
-  
+
     script.onerror = () => {
       alert('Failed to load Razorpay script. Please try again later.');
     };
-  
+
     document.body.appendChild(script);
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Save address first
-      const addressPayload = { formData, cartId: cartId.id };
+      const addressPayload = { formData, cartId: id };
       await axiosInstance.post('/Address/addAddress', addressPayload, {
         withCredentials: true,
       });
 
-      // Create payment order
-      
-    
-      const orderRes = await axiosInstance.post('/payment/create', {
-        amount: cartTotal,
-        cartId: cartId.id, // Add this line
-        data:cartItems,
-      }, {
-        withCredentials: true,
-      });
-      console.log(`orders`,orderRes.data);  
-            
+      const orderRes = await axiosInstance.post(
+        '/payment/create',
+        {
+          amount: cartTotal,
+          cartId: id,
+          data: cartItems,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log('Order Data:', orderRes.data);
+
       loadRazorpay(orderRes.data.order);
- 
-      
     } catch (error) {
       console.error(error);
       alert('Something went wrong.');

@@ -52,7 +52,7 @@ export const CommonLogin = () => {
           email: formData.email,
           password: formData.password,
         }, { withCredentials: true });
-        navigate('/home');
+        navigate('/homePage');
       }
     } catch (error) {
       console.error('Form submission error:', error);

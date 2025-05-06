@@ -133,6 +133,10 @@ export const router=createBrowserRouter([
     element:<UserAuth><UserLayout/></UserAuth>,
     children:[
         {
+            path: "homePage",
+            element: <UserHomePage/>
+        },
+        {
             path: "Cartpageeee",
             element: <CartPage/>
         },

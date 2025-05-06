@@ -50,9 +50,11 @@ export const IteamPage = () => {
         { withCredentials: true }
       );
       toast.success('Item added to cart!');
-      navigate('/Cartpageeee');
     } catch (error) {
       console.error('Error adding to cart:', error.response?.data || error.message);
+      if (error.response.data.token===false){
+        navigate('/login')
+      }
       toast.error('Failed to add item to cart');
     }
   };

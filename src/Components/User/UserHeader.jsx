@@ -19,8 +19,11 @@ export const UserHeader = () => {
 
   const handleLogout = async () => {
     try {
-      await axiosInstance.post("/user/logout", {}, { withCredentials: true });
-      navigate("/login");
+      
+     const res = await axiosInstance.post("/user/logout", {}, { withCredentials: true });
+     console.log(res);
+     
+      navigate("/home");
     } catch (error) {
       console.error("Logout failed:", error);
     }
